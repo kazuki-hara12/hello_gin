@@ -4,7 +4,7 @@ import (
   "time"
 )
 
-type Book struct {
+type Article struct {
   Id uint
   Title string `gorm:"size:128"`
   Category int

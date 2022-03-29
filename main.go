@@ -2,12 +2,24 @@ package main
 
 import (
   "github.com/gin-gonic/gin"
+	"hello_gin/db"
+	"net/http"
+	"hello_gin/entity"
 )
 
 func main() {
+	db.Init()
 	r := gin.Default()
+
+	r.GET("/articles", func(c *gin.Context) {
+		a := db.GetDB()
+		var article []entity.Article
+		result := a.Find(&article)
+		c.JSON(http.StatusOK, result)
+	})
+
 	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
 		})
 	})

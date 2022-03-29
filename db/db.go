@@ -5,8 +5,7 @@ import (
 	"gorm.io/driver/mysql"
   "gorm.io/gorm"
   "github.com/joho/godotenv"
-
-  "entity"
+  "hello_gin/entity"
 )
 
 var (
@@ -27,10 +26,11 @@ func Init() {
 
   // 環境変数取得
   godotenv.Load(".env." + env)
-  godotenv.Load()
+
+  dsn := "root:password@tcp(localhost)/sample?charset=utf8&parseTime=True&loc=Local"
 
   // DB接続
-  db, err = gorm.Open("mysql", os.Getenv("CONNECT"))
+  db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
   if err != nil {
     panic(err)
@@ -42,13 +42,6 @@ func Init() {
 // DB取得
 func GetDB() *gorm.DB {
   return db
-}
-
-// DB接続終了
-func Close() {
-  if err := db.Close(); err != nil {
-    panic(err)
-  }
 }
 
 // マイグレーション
