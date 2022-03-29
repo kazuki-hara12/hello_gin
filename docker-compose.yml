@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  app:
+      build: .
+      tty: true
+      volumes:
+          - ./app:/go/src/app
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: sample
+    hostname: mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  db-data:
+    driver: local
