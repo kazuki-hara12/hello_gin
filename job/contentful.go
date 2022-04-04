@@ -9,6 +9,8 @@ import (
 	"hello_gin/entity"
 	"fmt"
 	"time"
+	"os"
+	"github.com/joho/godotenv"
 )
 
 type ContentfulJob struct {
@@ -75,7 +77,9 @@ type Item struct {
 
 func (e ContentfulJob) Run() {
 	fmt.Println("[Start] Run ContentfulJob!")
-	resp, err := http.Get("https://cdn.contentful.com")
+	err := godotenv.Load(".env")
+	url := os.Getenv("CONTENTFUL_URL")
+	resp, err := http.Get(url)
 	if err != nil {
 		log.Fatal(err)
 	}
