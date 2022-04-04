@@ -27,7 +27,7 @@ func Init() {
   // 環境変数取得
   godotenv.Load(".env." + env)
 
-  dsn := "root:password@tcp(localhost)/sample?charset=utf8&parseTime=True&loc=Local"
+  dsn := "root:password@tcp(localhost)/sample?charset=utf8mb4&parseTime=True&loc=Local"
 
   // DB接続
   db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
@@ -46,5 +46,5 @@ func GetDB() *gorm.DB {
 
 // マイグレーション
 func autoMigration() {
-  db.AutoMigrate(&entity.Article{})
+  db.Set("gorm:table_options", "CHARSET=utf8mb4").AutoMigrate(&entity.Article{})
 }

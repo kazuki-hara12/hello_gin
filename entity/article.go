@@ -1,13 +1,8 @@
 package entity
 
-import (
-  "time"
-)
-
 type Article struct {
-  Id uint
-  Title string `gorm:"size:128"`
-  Category int
-  Author string `gorm:"size:64"`
-  CreatedAt time.Time
+  Id uint   `json:"id"`
+  Title string `json:"title";gorm:"size:128"`
+  Description string `json:"description";gorm:"size:128"`
+  Body string `json:"body";gorm:"size:128"`
 }
